@@ -24,3 +24,13 @@ function deleteInstructorById($id) {
             return $queryDeleteUser->execute();
 
 }
+
+function deleteUserById($id) {
+    global $conn;
+            $stmt = $conn->prepare("DELETE FROM brugere WHERE fk_profil = $id");
+            $stmt->execute();
+            $queryDeleteUser = $conn->prepare("DELETE FROM profil WHERE id = $id");
+            //$queryDeleteUser->bindParam(':ID', $Id, PDO::PARAM_INT);
+            return $queryDeleteUser->execute();
+
+}

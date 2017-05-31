@@ -1,10 +1,6 @@
 <?php
-    $stmt = $conn->prepare("SELECT instruktor.id, instruktor.beskrivelse, profil.fornavn, profil.efternavn, profil.tlf, media.sti, brugere.email
-                        FROM instruktor
-                        INNER JOIN profil 
-                        ON instruktor.fk_profil = profil.id
-                        INNER JOIN media
-                        ON instruktor.fk_media = media.id
+    $stmt = $conn->prepare("SELECT profil.id, profil.fornavn, profil.efternavn, profil.tlf, brugere.email
+                        FROM profil
                         INNER JOIN brugere
                         ON brugere.fk_profil = profil.id
                         ORDER BY profil.fornavn ASC");
@@ -13,14 +9,14 @@
     $result = $stmt->setFetchMode(PDO::FETCH_OBJ);
 ?>
 
+
+
 <div class="container">
       <table class="highlight">
         <thead>
           <tr>
-              <th></th>
               <th>Navn</th>
               <th>Tlf.</th>
-              <th>Beskrivelse</th>
               <th>Email</th>
               <th></th>
               <th></th>
@@ -31,10 +27,8 @@
           <?php
             foreach($stmt->fetchAll() as $value) {
                 echo '<tr>
-                        <td><img class="instImg" src="./../media/'.$value->sti.'" alt=""></td>
                         <td>'.$value->fornavn.' '.$value->efternavn.'</td>
                         <td>'.$value->tlf.'</td>
-                        <td>'.$value->beskrivelse.'</td>
                         <td>'.$value->email.'</td>
                         <td><a class="red-text" data-target="modal'.$value->id.'"><i class="fa fa-trash" aria-hidden="true"></i></a></td>
                         <td><i class="fa fa-pencil" aria-hidden="true"></i></td>
@@ -49,7 +43,7 @@
                             </div>
                             <div class="modal-footer">
                             <a href="#!" class="modal-action modal-close waves-effect waves-green btn-flat">Nej</a>
-                            <a href="?p=deleteInst&id='.$value->id.'" class="modal-action modal-close waves-effect waves-green btn-flat">Ja</a>
+                            <a href="?p=deleteUser&userid='.$value->id.'" class="modal-action modal-close waves-effect waves-green btn-flat">Ja</a>
                             </div>
                         </div>';
             }

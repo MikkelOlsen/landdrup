@@ -27,6 +27,8 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.2/css/materialize.min.css">
   <link rel="stylesheet" href="./assets/style/mystyle.css">
   <?php if(isset($_SESSION['userid'])){echo '<link rel="stylesheet" href="./assets/style/loggedin.css">';} ?>
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons"
+      rel="stylesheet">
   <!-- Include jQuery -->
     <script type="text/javascript" src="https://code.jquery.com/jquery-1.11.3.min.js"></script>
 
@@ -44,7 +46,7 @@
 ?>
 <main>
 <nav>
-    <div class="nav-wrapper">
+    <div class="nav-wrapper main-nav">
       <a href="#" class="brand-logo"><h3>Landdrup Dans</h3></a>
       <ul id="nav-mobile" class="right hide-on-med-and-down">
         <li><a href="?p=profil">Profil</a></li>
@@ -81,6 +83,12 @@
                         break;
                     case 'deleteInst';
                         include_once './plugins/instructor/delete.php';
+                        break;
+                    case 'visBruger';
+                        include_once './plugins/users/show.php';
+                        break;
+                    case 'deleteUser';
+                        include_once './plugins/users/delete.php';
                         break;
                     default: 
                         echo '<h2>Velkommen til admin delen.</h2>'.PHP_EOL;

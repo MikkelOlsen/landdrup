@@ -13,12 +13,9 @@ line height is 20px by default so add 30px top and bottom to equal the new .navb
 box-shadow: 0px 0px 33px 0px rgba(0,0,0,1);
 }
 
-nav {
+.main-nav {
     background-image: url('../img/geometric-sun.jpg');
     background-repeat: repeat-x;
-}
-
-footer {
 }
 
 .brand-logo>img {
