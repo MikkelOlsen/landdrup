@@ -74,7 +74,7 @@
                                         //print_r(validTel('34 45 23 23'));
                                         //print_r(validTel($post['tlf']));
                                         //print_r($tel);
-                                        print_r($error);
+                                        //print_r($error);
 
 ?>
 <div class="container">

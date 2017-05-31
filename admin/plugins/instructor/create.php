@@ -5,7 +5,7 @@
 	if(secCheckMethod('POST')){
 		$error   		= [];
 		$post    		= secGetInputArray(INPUT_POST);
-		$bruger 		= $post['bruger'] !== 0 ? $post['bruger'] 									: $error['bruger'] 		= 'fejl besked bruger!';
+		$bruger 		= isset($post['bruger']) ? $post['bruger'] 									: $error['bruger'] 		= 'fejl besked bruger!';
 		$beskrivelse 	= validMixedBetween($post['beskrivelse'], 1, 511) ? $post['beskrivelse'] 	: $error['beskrivelse'] = 'fejl besked beskrivelse!';
 		if(sizeof($error) === 0){
 			$billede = mediaImageUploader('filUpload');
@@ -29,13 +29,13 @@
 			}
 		}
 	} else {
-			$stmt = $conn->prepare("SELECT brugere.id, profil.fornavn, profil.efternavn
-									FROM brugere
+			$stmt = $conn->prepare("SELECT profil.id, profil.fornavn, profil.efternavn
+									FROM profil
+									INNER JOIN brugere
+									ON brugere.fk_profil = profil.id
 									INNER JOIN brugerroller
 									ON brugere.fk_brugerrolle = brugerroller.id
-									INNER JOIN profil
-									ON brugere.fk_profil = profil.id
-									WHERE brugerroller.niveau >= 50 AND brugere.id NOT IN (SELECT instruktor.fk_profil FROM instruktor)");
+									WHERE brugerroller.niveau >= 50 AND profil.id NOT IN (SELECT instruktor.fk_profil FROM instruktor)");
 			$stmt->execute();
 			$result = $stmt->setFetchMode(PDO::FETCH_OBJ); 
 	}
@@ -47,10 +47,11 @@
 		<h1 class="center-align">Instruktør</h1>
 		<div class="input-field col s12">
 		<select name="bruger">
-			<option value="0">Vælg en bruger</option>
-			<?php foreach($stmt->fetchAll() as $value): ?>
-				<option value="<?= $value->id ?>"><?= $value->fornavn . ' ' . $value->efternavn ?></option>
-			<?php endforeach; ?>
+		<option value="" disabled selected>Choose your option</option>
+			<?php foreach($stmt->fetchAll() as $value){
+				echo '<option value="'.$value->id.'">'.$value->fornavn.' '.$value->efternavn.'</option>';
+			}
+				?>
 		</select>
 		</div>
 		<div class="input-field col s12">

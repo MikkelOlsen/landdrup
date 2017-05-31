@@ -17,12 +17,12 @@
             <a class="collapsible-header">Instruktør<i class="fa fa-chevron-down" aria-hidden="true"></i></a>
             <div class="collapsible-body">
               <ul>
+              <li><a href="?p=visInstruktor">Liste</a></li>
                 <?php
                   if($user['niveau'] >= 90) {
                     echo '<li><a href="?p=opretInstruktor">Opret Intruktør</a></li>';
                   }
                 ?>
-                <li><a href="?p=visInstruktor">Liste</a></li>
               </ul>
             </div>
           </li>
@@ -32,15 +32,15 @@
     <li class="no-padding">
         <ul class="collapsible collapsible-accordion">
           <li>
-            <a class="collapsible-header">Instruktør<i class="fa fa-chevron-down" aria-hidden="true"></i></a>
+            <a class="collapsible-header">Brugere<i class="fa fa-chevron-down" aria-hidden="true"></i></a>
             <div class="collapsible-body">
               <ul>
+              <li><a href="?p=visBruger">Liste</a></li>
                 <?php
                   if($user['niveau'] >= 90) {
-                    echo '<li><a href="?p=opretInstruktor">Opret Intruktør</a></li>';
+                    echo '<li><a href="?p=opretBruger">Opret Bruger</a></li>';
                   }
                 ?>
-                <li><a href="?p=visInstruktor">Liste</a></li>
               </ul>
             </div>
           </li>

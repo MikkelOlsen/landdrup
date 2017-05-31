@@ -35,7 +35,7 @@
                         <td>'.$value->tlf.'</td>
                         <td>'.$value->beskrivelse.'</td>
                         <td>'.$value->email.'</td>
-                        <td><a href="?p=deleteInst&id='.$value->id.'"><i class="fa fa-trash" aria-hidden="true"></i></a></td>
+                        <td><a class="red-text" href="?p=deleteInst&id='.$value->id.'"><i class="fa fa-trash" aria-hidden="true"></i></a></td>
                         <td><i class="fa fa-pencil" aria-hidden="true"></i></td>
                       </tr>';
             }

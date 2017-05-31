@@ -45,7 +45,7 @@
 <main>
 <nav>
     <div class="nav-wrapper">
-      <a href="#" class="brand-logo"><img src="./assets/img/brands_placeholder.png" alt=""></a>
+      <a href="#" class="brand-logo"><h3>Landdrup Dans</h3></a>
       <ul id="nav-mobile" class="right hide-on-med-and-down">
         <li><a href="?p=profil">Profil</a></li>
         <li><a href="badges.html">Components</a></li>
