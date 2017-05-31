@@ -44,3 +44,10 @@
 			];
 		}
 	}
+
+function deleteMedia($id) {
+	global $conn;
+            $queryDeleteMedia = $conn->prepare("DELETE FROM media WHERE id = $id");
+            //$queryDeleteUser->bindParam(':ID', $Id, PDO::PARAM_INT);
+            return $queryDeleteMedia->execute();
+}

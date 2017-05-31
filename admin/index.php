@@ -10,6 +10,8 @@
         //header('Location: ?p=login');
         //die();
     }
+        $user = userGet();
+
 ?>
 
 <!DOCTYPE html>
@@ -20,16 +22,37 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Document</title>
 <!-- Latest compiled and minified CSS -->
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
-    <link rel="stylesheet" href="./assets/style/mystyle.css">
+ <!-- Compiled and minified CSS -->
+ <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.2/css/materialize.min.css">
+  <link rel="stylesheet" href="./assets/style/mystyle.css">
+  <?php if(isset($_SESSION['userid'])){echo '<link rel="stylesheet" href="./assets/style/loggedin.css">';} ?>
+  <!-- Include jQuery -->
+    <script type="text/javascript" src="https://code.jquery.com/jquery-1.11.3.min.js"></script>
+
+  <!-- Compiled and minified JavaScript -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.2/js/materialize.min.js"></script>
 
 </head>
-<div class="background-cover">
 <body>
+
+
 <?php
-    include './includes/header.php';
+    if(isset($_SESSION['userid'])) {
+        include_once './includes/header.php';
+    }
 ?>
-<div class="container static-background">
+<main>
+<nav>
+    <div class="nav-wrapper">
+      <a href="#" class="brand-logo"><img src="./assets/img/brands_placeholder.png" alt=""></a>
+      <ul id="nav-mobile" class="right hide-on-med-and-down">
+        <li><a href="?p=profil">Profil</a></li>
+        <li><a href="badges.html">Components</a></li>
+        <li><a href="collapsible.html">JavaScript</a></li>
+      </ul>
+    </div>
+  </nav>
     <?php
         if(secCheckMethod('GET') || secCheckMethod('POST')) {
             $get = secGetInputArray(INPUT_GET);
@@ -47,6 +70,18 @@
                     case 'opretInstruktor':
 						include_once './plugins/instructor/create.php';
 						break;
+                    case 'logout';
+                        include_once './plugins/users/logout.php';
+                        break;
+                    case 'settings';
+                        include_once './plugins/users/settings.php';
+                        break;  
+                    case 'visInstruktor';
+                        include_once './plugins/instructor/show.php';
+                        break;
+                    case 'deleteInst';
+                        include_once './plugins/instructor/delete.php';
+                        break;
                     default: 
                         echo '<h2>Velkommen til admin delen.</h2>'.PHP_EOL;
                         break;
@@ -56,13 +91,28 @@
             echo '<h2>Velkommen til admin delen.</h2>'.PHP_EOL;
             }
         }
-    ?>
-    </diV>
-</body>
-</div>
-</html>
-<!-- Include jQuery -->
-<script type="text/javascript" src="https://code.jquery.com/jquery-1.11.3.min.js"></script>
 
-<!-- Latest compiled and minified JavaScript -->
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+    ?>
+
+                <div class="fixed-action-btn">
+                    <a href="#" data-activates="slide-out" class="button-collapse btn-floating btn-large waves-effect waves-light red">
+                        <i class="fa fa-bars" style="font-size:30px;" aria-hidden="true"></i>
+                    </a>
+                </div>
+
+  <script>
+
+      
+  $(document).ready(function() {
+    $('select').material_select();
+    $(".button-collapse").sideNav();
+  });
+            
+  </script>
+  
+</main>
+    <?php
+        include_once './includes/footer.php';
+    ?>
+</body>
+</html>

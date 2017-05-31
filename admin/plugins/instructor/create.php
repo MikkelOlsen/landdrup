@@ -23,33 +23,50 @@
 						':fk_profil' => $bruger
 					)
 				);
+				header('Location: ?p=opretInstruktor');
 			} else {
 				$error['filUpload'] = $billede['msg'];
 			}
 		}
 	} else {
-			$stmt = $conn->prepare("SELECT brugere.id, profil.fornavn, profil.efternavn FROM `brugere`
-									INNER JOIN `brugerroller` ON `brugere`.`fk_brugerrolle` = `brugerroller`.`id`
-									INNER JOIN `profil` ON `profil`.`id` = `brugere`.`fk_profil`
-									WHERE `brugerroller`.niveau >= 50");
+			$stmt = $conn->prepare("SELECT brugere.id, profil.fornavn, profil.efternavn
+									FROM brugere
+									INNER JOIN brugerroller
+									ON brugere.fk_brugerrolle = brugerroller.id
+									INNER JOIN profil
+									ON brugere.fk_profil = profil.id
+									WHERE brugerroller.niveau >= 50 AND brugere.id NOT IN (SELECT instruktor.fk_profil FROM instruktor)");
 			$stmt->execute();
 			$result = $stmt->setFetchMode(PDO::FETCH_OBJ); 
 	}
 ?>
 
-<form action="" method="post" enctype="multipart/form-data">
-	<fieldset>
-		<legend>Instruktør</legend>
+<div class="container">
+	<div class="row">
+		<form action="" method="post" class="col s12" enctype="multipart/form-data">
+		<h1 class="center-align">Instruktør</h1>
+		<div class="input-field col s12">
 		<select name="bruger">
 			<option value="0">Vælg en bruger</option>
 			<?php foreach($stmt->fetchAll() as $value): ?>
 				<option value="<?= $value->id ?>"><?= $value->fornavn . ' ' . $value->efternavn ?></option>
 			<?php endforeach; ?>
-		</select><br />
-		<label for="beskrivelse">Beskrivelse</label><br />
-		<textarea name="beskrivelse"></textarea><br />
-		<label for="filUpload">Billed</label><br />
-		<input name="filUpload" type="file"><br /><br />
-		<button name="opretInstruktor" type="submit">Opret</button>
-	</fieldset>
-</form>
+		</select>
+		</div>
+		<div class="input-field col s12">
+		<textarea name="beskrivelse" class="materialize-textarea"></textarea>
+		<label for="beskrivelse">Beskrivelse</label>
+		</div>
+		<div class="file-field input-field col s12">
+			<div class="btn">
+				<span>Billede</span>
+				<input name="filUpload" type="file">
+			</div>
+			<div class="file-path-wrapper">
+				<input class="file-path validate"  type="text">
+			</div>
+		<button name="opretInstruktor" class="waves-effect waves-light btn" type="submit">Opret</button>
+		</div>
+</form>		
+	</div>
+</div>

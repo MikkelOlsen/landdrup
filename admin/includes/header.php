@@ -1,41 +1,51 @@
-<div class="example3">
-  <nav class="navbar navbar-inverse navbar-fixed-top">
-        <a href="#" class="navbar-text" data-toggle="modal" data-target="#loginModal">Login</a>
-
-    <div class="container">
-      <div class="navbar-header">
-        <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar3">
-          <span class="sr-only">Toggle navigation</span>
-          <span class="icon-bar"></span>
-          <span class="icon-bar"></span>
-          <span class="icon-bar"></span>
-        </button>
-        <a class="navbar-brand" href="http://disputebills.com"><img src="./assets/img/brands_placeholder.png" alt="Dispute Bills">
-        </a>
-        <h2 class="navbar-text">Brand Name</h3>
+<ul id="slide-out" class="side-nav fixed">
+    <li><div class="userView">
+      <div class="background">
+        <img src="./assets/img/cover.jpg" style="height:176px; width:300px;" alt="Dispute Bills">
       </div>
-      <div id="navbar3" class="navbar-collapse collapse">
-        <ul class="nav navbar-nav navbar-right">
-          <li class="active"><a href="#">Home</a></li>
-          <li><a href="#">About</a></li>
-          <li><a href="#">Contact</a></li>
-          <li class="dropdown">
-            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Dropdown <span class="caret"></span></a>
-            <ul class="dropdown-menu" role="menu">
-              <li><a href="#">Action</a></li>
-              <li><a href="#">Another action</a></li>
-              <li><a href="#">Something else here</a></li>
-              <li class="divider"></li>
-              <li class="dropdown-header">Nav header</li>
-              <li><a href="#">Separated link</a></li>
-              <li><a href="#">One more separated link</a></li>
-            </ul>
+      <a href="?p=profil"><img src="./assets/img/dummy_350x350.png" alt="user" class="circle"></a>
+      <a href="?p=profil"><span class="white-text name"><?= $user['fornavn'] .' '. $user['efternavn']?></span></a>
+      <a href="?p=profil"><span class="white-text email"><?= $user['email']?></span></a>
+    </div></li>
+    <li><a class="waves-effect" href="?p=profil"><i class="fa fa-user-o" aria-hidden="true"></i>Profil</a></li>
+    <li><a class="waves-effect" href="?p=settings"><i class="fa fa-cog" aria-hidden="true"></i>Indstillinger</a></li>
+   
+    <li><div class="divider"></div></li>
+    <li class="no-padding">
+        <ul class="collapsible collapsible-accordion">
+          <li>
+            <a class="collapsible-header">Instruktør<i class="fa fa-chevron-down" aria-hidden="true"></i></a>
+            <div class="collapsible-body">
+              <ul>
+                <?php
+                  if($user['niveau'] >= 90) {
+                    echo '<li><a href="?p=opretInstruktor">Opret Intruktør</a></li>';
+                  }
+                ?>
+                <li><a href="?p=visInstruktor">Liste</a></li>
+              </ul>
+            </div>
           </li>
         </ul>
-      </div>
-      <!--/.nav-collapse -->
-    </div>
-    <!--/.container-fluid -->
-
-  </nav>
-</div>
+      </li>
+    
+    <li class="no-padding">
+        <ul class="collapsible collapsible-accordion">
+          <li>
+            <a class="collapsible-header">Instruktør<i class="fa fa-chevron-down" aria-hidden="true"></i></a>
+            <div class="collapsible-body">
+              <ul>
+                <?php
+                  if($user['niveau'] >= 90) {
+                    echo '<li><a href="?p=opretInstruktor">Opret Intruktør</a></li>';
+                  }
+                ?>
+                <li><a href="?p=visInstruktor">Liste</a></li>
+              </ul>
+            </div>
+          </li>
+        </ul>
+      </li>
+      <li><div class="divider"></div></li>
+       <li><a class="waves-effect bottom" href="?p=logout"><i class="fa fa-sign-out" aria-hidden="true"></i>Log ud</a></li>
+  </ul>
