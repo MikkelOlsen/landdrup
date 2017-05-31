@@ -31,7 +31,7 @@
                         <td>'.$value->tlf.'</td>
                         <td>'.$value->email.'</td>
                         <td><a class="red-text" data-target="modal'.$value->id.'"><i class="fa fa-trash" aria-hidden="true"></i></a></td>
-                        <td><i class="fa fa-pencil" aria-hidden="true"></i></td>
+                        <td><a class="grey-text text-lighten-2" href="#"><i class="fa fa-pencil" aria-hidden="true"></i></a></td>
                       </tr>';
 
                 echo '

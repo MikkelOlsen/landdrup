@@ -1,4 +1,4 @@
-<ul id="slide-out" class="side-nav fixed">
+<ul id="slide-out" class="side-nav">
     <li><div class="userView">
       <div class="background">
         <img src="./assets/img/cover.jpg" style="height:176px; width:300px;" alt="Dispute Bills">
