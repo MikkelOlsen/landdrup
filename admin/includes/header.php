@@ -29,7 +29,7 @@
               <li><a href="?p=visInstruktor">Liste</a></li>
                 <?php
                   if($user['niveau'] >= 90) {
-                    echo '<li><a href="index.php?p=home&view=instructor/create">Opret Intruktør</a></li>';
+                    echo '<li><a href="?p=opretInstruktor">Opret Intruktør</a></li>';
                   }
                 ?>
               </ul>

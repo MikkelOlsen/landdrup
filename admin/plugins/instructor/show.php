@@ -36,7 +36,7 @@
                         <td>'.$value->tlf.'</td>
                         <td>'.$value->beskrivelse.'</td>
                         <td>'.$value->email.'</td>
-                        <td><a class="red-text" data-target="modal'.$value->instID.'"><i class="fa fa-trash" aria-hidden="true"></i></a></td>
+                        <td><a href="#" class="red-text" data-target="modal'.$value->instID.'"><i class="fa fa-trash" aria-hidden="true"></i></a></td>
                         <td><a class="" href="?p=redigerInst&id='.$value->profID.'"><i class="fa fa-pencil" aria-hidden="true"></i></a></td>
                       </tr>';
 
