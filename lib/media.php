@@ -51,3 +51,16 @@ function deleteMedia($id) {
             //$queryDeleteUser->bindParam(':ID', $Id, PDO::PARAM_INT);
             return $queryDeleteMedia->execute();
 }
+
+function getImage($id) {
+    global $conn;
+    $stmt = $conn->prepare("SELECT media.sti, media.id
+                            FROM media
+                            INNER JOIN instruktor
+                            ON media.id = instruktor.fk_media
+                            WHERE instruktor.fk_profil = :id");
+    $stmt->bindParam(':id', $id, PDO::PARAM_INT);
+    if($stmt->execute() && ($stmt->rowCount() == 1)) {
+        return $stmt->fetch(PDO::FETCH_ASSOC);
+    }
+}

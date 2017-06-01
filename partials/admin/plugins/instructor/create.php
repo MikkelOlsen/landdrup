@@ -2,7 +2,12 @@
 	if(secCheckLevel() < 90){
 		die();
 	}
+	
 	if(secCheckMethod('POST')){
+		$post = secGetInputArray(INPUT_POST);
+		if(!secValidateToken($post['_once'], 600)) {
+            $error['session'] = 'Din session er udløbet. Prøv igen.';
+        }
 		$error   		= [];
 		$post    		= secGetInputArray(INPUT_POST);
 		$bruger 		= isset($post['bruger']) ? $post['bruger'] 									: $error['bruger'] 		= 'fejl besked bruger!';
@@ -44,6 +49,7 @@
 <div class="container">
 	<div class="row">
 		<form action="" method="post" class="col s12" enctype="multipart/form-data">
+		<?=secCreateTokenInput()?>
 		<h1 class="center-align">Instruktør</h1>
 		<div class="input-field col s12">
 		<select name="bruger">

@@ -35,15 +35,13 @@ function deleteUserById($id) {
 
 }
 
-function getImage($id) {
+function instGet($id) {
     global $conn;
-    $stmt = $conn->prepare("SELECT media.sti
-                            FROM media
-                            INNER JOIN instruktor
-                            ON media.id = instruktor.fk_media
-                            WHERE instruktor.fk_profil = :id");
-    $stmt->bindParam(':id', $id, PDO::PARAM_INT);
-    if($stmt->execute() && ($stmt->rowCount() == 1)) {
-        return $stmt->fetch(PDO::FETCH_ASSOC);
-    }
+     $stmt = $conn->prepare("SELECT beskrivelse 
+                             FROM instruktor
+                             WHERE fk_profil = :id");
+                $stmt->bindParam(':id', $id, PDO::PARAM_INT);
+                if($stmt->execute() && ($stmt->rowCount() === 1)) {
+                    return $stmt->fetch(PDO::FETCH_ASSOC);
+                }
 }
