@@ -1,9 +1,17 @@
-<ul id="slide-out" class="side-nav">
+<?php
+  if(getImage($_SESSION['profilid'])) {
+    $img = getImage($_SESSION['profilid']);
+    $sti = './../media/'.$img['sti'];
+  } else {
+    $sti = './assets/img/dummy_350x350.png';
+  }
+?>
+<ul id="slide-out" class="side-nav fixed">
     <li><div class="userView">
       <div class="background">
         <img src="./assets/img/cover.jpg" style="height:176px; width:300px;" alt="Dispute Bills">
       </div>
-      <a href="?p=profil"><img src="./assets/img/dummy_350x350.png" alt="user" class="circle"></a>
+      <a href="?p=profil"><img src="<?php echo $sti; ?>" alt="user" class="circle"></a>
       <a href="?p=profil"><span class="white-text name"><?= $user['fornavn'] .' '. $user['efternavn']?></span></a>
       <a href="?p=profil"><span class="white-text email"><?= $user['email']?></span></a>
     </div></li>

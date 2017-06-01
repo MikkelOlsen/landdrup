@@ -40,7 +40,7 @@
 
 
 <?php
-    if(isset($_SESSION['userid'])) {
+    if(isset($_SESSION['userid']) && secCheckLevel() > 50) {
         include_once './includes/header.php';
     }
 ?>
@@ -52,17 +52,16 @@
         <li><a href="?p=profil">Profil</a></li>
         <li><a href="badges.html">Components</a></li>
         <?php if(!secIsLoggedIn()) {echo '<li><a href="?p=login">Log ind</a></li>';}
-                else {echo '<li><a class="dropdown-button center-align" href="#!" data-activates="dropdown1">Menu<i class="material-icons right">arrow_drop_down</i></a></li>
+                else {echo '<li><a class="dropdown-button" href="#!" data-activates="dropdown1">Menu<i class="material-icons right">arrow_drop_down</i></a></li>
                                 <ul id="dropdown1" class="dropdown-content">
                                     <li><a href="#!">Min profil</a></li>
-                                    <li class="divider"></li>
-                                    <li><a href="#" data-activates="slide-out" class="menutoggle">Kontrolpanel</a></li>
                                     <li class="divider"></li>
                                     <li><a href="?p=logout">Log af</a></li>
                                 </ul>';} ?>
       </ul>
     </div>
   </nav>
+  
     <?php
         if(secCheckMethod('GET') || secCheckMethod('POST')) {
             $get = secGetInputArray(INPUT_GET);
@@ -121,8 +120,6 @@
       
   $(document).ready(function() {
     $('select').material_select();
-    $('.menutoggle').sideNav('show');
-    $('.menuclose').sidenav('hide');
     
 $(".dropdown-button").dropdown();
         
