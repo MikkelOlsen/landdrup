@@ -1,4 +1,8 @@
 <?php
+if(!secIsLoggedIn()) {
+        header('Location: ?p=login');
+        //die();
+    }
   if(secCheckMethod('POST')) {
         $post = secGetInputArray(INPUT_POST);
         $error = [];

@@ -1,5 +1,9 @@
 
 <?php
+if(!secIsLoggedIn()) {
+        header('Location: ?p=login');
+        //die();
+    }
     //print_r('Time: ' . (time() - $_SESSION['TokenAge']));
 
     if(secCheckMethod('POST')) {
@@ -49,7 +53,7 @@
 									':tlf' => $tel,
 									':omg' => $mail,
 									':nice' => $adgangskode,
-									':wtf' => 2
+									':wtf' => 4
 								))) {
                                                                 echo 'test';
 

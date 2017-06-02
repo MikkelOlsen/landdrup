@@ -1,4 +1,8 @@
 <?php
+if(!secIsLoggedIn()) {
+        header('Location: ?p=login');
+        //die();
+    }
 	if(secCheckLevel() < 90){
 		die();
 	}

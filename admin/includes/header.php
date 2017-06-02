@@ -1,10 +1,20 @@
 <?php
-  if(getImage($_SESSION['profilid'])) {
-    $img = getImage($_SESSION['profilid']);
+  if(getFromDB("SELECT media.sti, media.id
+                            FROM media
+                            INNER JOIN instruktor
+                            ON media.id = instruktor.fk_media
+                            WHERE instruktor.fk_profil = :id",$_SESSION['profilid'])) {
+    $img = getFromDB("SELECT media.sti, media.id
+                            FROM media
+                            INNER JOIN instruktor
+                            ON media.id = instruktor.fk_media
+                            WHERE instruktor.fk_profil = :id",$_SESSION['profilid']);
+    if(file_exists('./../media/'.$img['sti'])) {
     $sti = './../media/'.$img['sti'];
     $imgID = $img['id'];
+    }
   } else {
-    $sti = './assets/img/dummy_350x350.png';
+    $sti = './assets/img/images.jpg';
   }
 ?>
 <ul id="slide-out" class="side-nav fixed">
@@ -55,6 +65,43 @@
           </li>
         </ul>
       </li>
+
+      <li class="no-padding">
+        <ul class="collapsible collapsible-accordion">
+          <li>
+            <a class="collapsible-header">Stilarter<i class="fa fa-chevron-down" aria-hidden="true"></i></a>
+            <div class="collapsible-body">
+              <ul>
+              <li><a href="?p=visStil">Liste</a></li>
+                <?php
+                  if($user['niveau'] >= 90) {
+                    echo '<li><a href="?p=opretStil">Opret Stilart</a></li>';
+                  }
+                ?>
+              </ul>
+            </div>
+          </li>
+        </ul>
+      </li>
+      
+      <li class="no-padding">
+        <ul class="collapsible collapsible-accordion">
+          <li>
+            <a class="collapsible-header">Niveauer<i class="fa fa-chevron-down" aria-hidden="true"></i></a>
+            <div class="collapsible-body">
+              <ul>
+              <li><a href="?p=visNiveau">Liste</a></li>
+                <?php
+                  if($user['niveau'] >= 90) {
+                    echo '<li><a href="?p=opretNiveau">Opret Niveau</a></li>';
+                  }
+                ?>
+              </ul>
+            </div>
+          </li>
+        </ul>
+      </li>
+      
       <li><div class="divider"></div></li>
        <li><a class="waves-effect bottom" href="?p=logout"><i class="fa fa-sign-out" aria-hidden="true"></i>Log ud</a></li>
   </ul>

@@ -1,22 +1,26 @@
 <?php
+if(!secIsLoggedIn()) {
+        header('Location: ?p=login');
+        //die();
+    }
 if(isset($get['id']) && !empty($get['id'])){
     if(secCheckLevel() >= 90) {
         $profileId = $get['id'];
     } else {
-        header('Location: ?p=visInstruktor');
+        header('Location: ?p=visStil');
         exit;
     }
 }else{
     echo 'fejl i id get';
-    header('Location: ?p=visInstruktor');
+    header('Location: ?p=visStil');
     exit;
 }
 
 $img = $conn->prepare("SELECT sti, media.id AS medId
                        FROM media 
-                       INNER JOIN instruktor 
-                       ON media.id = instruktor.fk_media 
-                       WHERE instruktor.id = :id");
+                       INNER JOIN stilarter
+                       ON media.id = stilarter.fk_media 
+                       WHERE stilarter.id = :id");
 $img->bindParam(':id', $profileId, PDO::PARAM_INT);
 $img->execute();
 
@@ -39,7 +43,7 @@ if(sqlQueryPrepared("DELETE FROM instruktor WHERE id = :id", array(':id' => $pro
         } else {
             echo 'nope';
         }
-    header('Location: ?p=visInstruktor');
+    header('Location: ?p=visStil');
 } else {
     echo 'Der skete en fejl ved slettelsen af instruktøren, prøv igen.';
 }

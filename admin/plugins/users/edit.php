@@ -1,62 +1,80 @@
 <?php
-    $stmt = $conn->prepare("SELECT profil.id, profil.fornavn, profil.efternavn, profil.tlf, brugere.email
-                        FROM profil
-                        INNER JOIN brugere
-                        ON brugere.fk_profil = profil.id
-                        ORDER BY profil.fornavn ASC");
+if(!secIsLoggedIn()) {
+        header('Location: ?p=login');
+        //die();
+    }
+    $stmt = $conn->prepare("SELECT navn, id, niveau
+                            FROM brugerroller
+                            WHERE niveau != 99");
     $stmt->execute();
 
     $result = $stmt->setFetchMode(PDO::FETCH_OBJ);
+
+    $profile = getFromDB("SELECT brugerroller.niveau, brugere.id, brugere.email, brugere.fk_brugerrolle, profil.fornavn, profil.efternavn, DATE_FORMAT(profil.fodselsdato, '%d %M %Y') AS dateCreated, profil.adresse, profil.postnr, profil.tlf, profil.city 
+                                  FROM brugere 
+                                  INNER JOIN profil 
+                                  ON brugere.fk_profil = profil.id
+                                  INNER JOIN brugerroller
+                                  ON brugere.fk_brugerrolle = brugerroller.id
+                                  WHERE profil.id = :id", $get['userid']);
+    
+
+    $error = [];
+    if(secCheckMethod('POST')){
+
+      $post = secGetInputArray(INPUT_POST);
+
+        if(!secValidateToken($post['_once'], 600)) {
+            $error['session'] = 'Din session er udløbet. Prøv igen.';
+        }
+
+        if(isset($post['opdaterBruger'])) {
+          $error=[];
+          $brugerrolle = isset($post['rolle']) ? $post['rolle'] : $error['rolle'] = 'Der er fejl i værdien på rollen du har valgt.';
+
+          if(sizeof($error) === 0) {
+            if(!sqlQueryPrepared('
+                UPDATE brugere SET fk_brugerrolle = :rolle WHERE fk_profil = :id
+            ', array(
+                ':rolle' => $brugerrolle,
+                ':id' => $get['userid']
+            ))){
+              $error['oprettelse'] = 'Der skete en fejl ved opdateringen af brugerens rolle.';
+            } else {
+              header('Location: ?p=visBruger');
+            }
+          }
+        }
+    }
+    //print_r($error);
+    //sprint_r($profile);
 ?>
 
 
 
+
 <div class="container">
-      <table class="highlight">
-        <thead>
-          <tr>
-              <th>Navn</th>
-              <th>Tlf.</th>
-              <th>Email</th>
-              <th></th>
-              <th></th>
-          </tr>
-        </thead>
-
-        <tbody>
-          <?php
-            foreach($stmt->fetchAll() as $value) {
-                echo '<tr>
-                        <td>'.$value->fornavn.' '.$value->efternavn.'</td>
-                        <td>'.$value->tlf.'</td>
-                        <td>'.$value->email.'</td>
-                        <td><a class="red-text" data-target="modal'.$value->id.'"><i class="fa fa-trash" aria-hidden="true"></i></a></td>
-                        <td><a class="grey-text text-lighten-2"><i class="fa fa-pencil" aria-hidden="true"></i></a></td>
-                      </tr>';
-
-                echo '
-                        <!-- Modal Structure -->
-                        <div id="modal'.$value->id.'" class="modal">
-                            <div class="modal-content">
-                            <h4>Sikker?</h4>
-                            <p>Er du sikker på at du vil fjerne <b>'.$value->fornavn.' '.$value->efternavn.'</b> som instruktør?</p>
-                            </div>
-                            <div class="modal-footer">
-                            <a href="#!" class="modal-action modal-close waves-effect waves-green btn-flat">Nej</a>
-                            <a href="?p=deleteUser&userid='.$value->id.'" class="modal-action modal-close waves-effect waves-green btn-flat">Ja</a>
-                            </div>
-                        </div>';
-            }
-          ?>
-        </tbody>
-      </table>
+<?php echo '<h2>Rediger bruger - '.$profile['fornavn'] . ' ' . $profile['efternavn'].'</h2>'; ?>
+<div class="row">
+     <form action="" method="post" class="col s8" enctype="multipart/form-data">
+     <?= secCreateTokenInput() ?>
+         <div class="input-field col s8">
+          <select name="rolle">
+            <?php
+              foreach($stmt->fetchAll() as $value) {
+                $selected = '';
+                if($value->id === $profile['fk_brugerrolle']) {
+                  $selected = 'selected';
+                }
+                echo '<option value="'.$value->id.'" '.$selected.'>'.$value->navn.'</option>';
+              }
+            ?>
+          </select>
+          <label>Bruger Rolle</label>
+        </div>
 </div>
+        <input type="submit" class="btn btn-default col-md-3" name="opdaterBruger" value="submit">
+     </form>
 
-<script>
-    
-  $(document).ready(function(){
-    // the "href" attribute of .modal-trigger must specify the modal ID that wants to be triggered
-    $('.modal').modal();
-  });
-</script>
+</div>
 

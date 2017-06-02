@@ -1,5 +1,5 @@
 <?php
-
+    ob_start();
     require_once './sqlconfig.php';
     require_once '../lib/sqlOperations.php';
     require_once '../lib/validate.php';
@@ -7,10 +7,10 @@
     require_once '../lib/user.php';
     require_once '../lib/media.php';
     if(!secIsLoggedIn()) {
-        //header('Location: ?p=login');
+        header('Location: ?p=login');
         //die();
     }
-        $user = userGet();
+        $user = userGet($_SESSION['userid']);
 
 ?>
 
@@ -67,38 +67,79 @@
             $get = secGetInputArray(INPUT_GET);
             if(isset($get['p']) && !empty($get['p'])) {
                 switch ($get['p']) {
-                    case 'opretBruger' : 
-                        include_once './plugins/users/create.php';
-                        break;
+
+
+                    // OVERALL CASES
                     case 'login' :
                         include_once './plugins/users/login.php';
+                        break;
+                    case 'logout';
+                        include_once './plugins/users/logout.php';
+                        break;
+
+
+                    // USER CASES
+                    case 'visBruger';
+                        include_once './plugins/users/show.php';
+                        break;
+                    case 'opretBruger' : 
+                        include_once './plugins/users/create.php';
                         break;
                     case 'profil' : 
                         include_once './plugins/users/profil.php';
                         break;
-                    case 'opretInstruktor':
-						include_once './plugins/instructor/create.php';
-						break;
-                    case 'logout';
-                        include_once './plugins/users/logout.php';
-                        break;
                     case 'settings';
                         include_once './plugins/users/settings.php';
-                        break;  
-                    case 'visInstruktor';
-                        include_once './plugins/instructor/show.php';
-                        break;
-                    case 'deleteInst';
-                        include_once './plugins/instructor/delete.php';
-                        break;
-                    case 'visBruger';
-                        include_once './plugins/users/show.php';
-                        break;
+                        break; 
                     case 'deleteUser';
                         include_once './plugins/users/delete.php';
                         break;
+                    case 'editUser';
+                        include_once './plugins/users/edit.php';
+                        break;
+
+
+                    // INSTRUCTOR CASES 
+                    case 'visInstruktor';
+                        include_once './plugins/instructor/show.php';
+                        break;
+                    case 'opretInstruktor':
+						include_once './plugins/instructor/create.php';
+						break;
+                    case 'deleteInst';
+                        include_once './plugins/instructor/delete.php';
+                        break;
                     case 'redigerInst';
                         include_once './plugins/instructor/edit.php';
+                        break;
+                    
+
+                    // STYLE CASES
+                    case 'opretStil';
+                        include_once './plugins/stilarter/create.php';
+                        break;
+                    case 'visStil';
+                        include_once './plugins/stilarter/show.php';
+                        break;
+                    case 'deleteStil';
+                        include_once './plugins/stilarter/delete.php';
+                        break;
+                    case 'redigerStil';
+                        include_once './plugins/stilarter/edit.php';
+                        break;
+
+                    // LEVEL CASES
+                    case 'opretNiveau';
+                        include_once './plugins/niveau/create.php';
+                        break;
+                    case 'visNiveau';
+                        include_once './plugins/niveau/show.php';
+                        break;
+                    case 'redigerNiveau';
+                        include_once './plugins/niveau/edit.php';
+                        break;
+
+
                     default: 
                         echo '<h2>Velkommen til admin delen.</h2>'.PHP_EOL;
                         break;
