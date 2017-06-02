@@ -1,4 +1,8 @@
 <?php
+if(!secIsLoggedIn()) {
+        header('Location: ?p=login');
+        //die();
+    }
 if(isset($get['id']) && !empty($get['id'])){
     if(secCheckLevel() >= 90) {
         $profileId = $get['id'];

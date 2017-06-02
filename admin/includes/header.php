@@ -102,6 +102,24 @@
         </ul>
       </li>
       
+      <li class="no-padding">
+        <ul class="collapsible collapsible-accordion">
+          <li>
+            <a class="collapsible-header">Aldersgrupper<i class="fa fa-chevron-down" aria-hidden="true"></i></a>
+            <div class="collapsible-body">
+              <ul>
+              <li><a href="?p=visAlder">Liste</a></li>
+                <?php
+                  if($user['niveau'] >= 90) {
+                    echo '<li><a href="?p=opretAlder">Opret Aldersgruppe</a></li>';
+                  }
+                ?>
+              </ul>
+            </div>
+          </li>
+        </ul>
+      </li>
+      
       <li><div class="divider"></div></li>
        <li><a class="waves-effect bottom" href="?p=logout"><i class="fa fa-sign-out" aria-hidden="true"></i>Log ud</a></li>
   </ul>

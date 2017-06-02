@@ -139,6 +139,14 @@
                         include_once './plugins/niveau/edit.php';
                         break;
 
+                    //AGE CASES
+                    case 'opretAlder';
+                        include_once './plugins/aldersgrupper/create.php';
+                        break;
+                    case 'visAlder';
+                        include_once './plugins/aldersgrupper/show.php';
+                        break;
+
 
                     default: 
                         echo '<h2>Velkommen til admin delen.</h2>'.PHP_EOL;
